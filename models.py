@@ -35,14 +35,14 @@ class TransformerTemporalModel(nn.Module):
         return self.transformer(x)
 
 class AttentionMILHead(nn.Module):
-    def __init__(self, embed_dim):
+    def __init__(self, embed_dim, num_classes=1):
         super(AttentionMILHead, self).__init__()
         self.attn = nn.Sequential(
             nn.Linear(embed_dim, embed_dim),
             nn.Tanh(),
             nn.Linear(embed_dim, 1)
         )
-        self.classifier = nn.Linear(embed_dim, 1)
+        self.classifier = nn.Linear(embed_dim, num_classes)  # num_classes should be defined externally
 
     def forward(self, x):
         # x: [B, T, E]
@@ -53,11 +53,11 @@ class AttentionMILHead(nn.Module):
         return logits, attn_weights
 
 class StressDetectionModel(nn.Module):
-    def __init__(self, input_dim, embed_dim):
+    def __init__(self, input_dim, embed_dim, num_classes=1):
         super(StressDetectionModel, self).__init__()
         self.encoder = FrameEncoderCNN(input_dim=input_dim, embed_dim=embed_dim)
         self.temporal_model = TransformerTemporalModel(embed_dim=embed_dim)
-        self.head = AttentionMILHead(embed_dim=embed_dim)
+        self.head = AttentionMILHead(embed_dim=embed_dim, num_classes=num_classes)
 
     def forward(self, x):
         # x: [B, T, F]
