@@ -9,6 +9,8 @@ import numpy as np
 epochs = 100
 subjects = [i for i in range(1, 60) if i not in [1, 33, 49, 55]]  # Exclude subjects 1, 33, 49, and 55.
 tasks = range(1, 12)  # Tasks from 1 to 11.
+stress_tasks = [3, 5, 7, 8, 10, 11]  # Stress tasks.
+non_stress_tasks = [1, 2, 4, 6, 9]  # Non-stress tasks.
 last_validations = []
 min_validations = {}
 last_validations_acc = []
@@ -53,7 +55,7 @@ for i, valid_task in enumerate(range(1, 12)):  # Use 1 task for validation.
 
         model.eval()
         with torch.no_grad():
-            valid_loss = 0.
+            valid_loss = 0.0
             accs = 0.0
             for batch_x, batch_y in valid_dl:
                 batch_x, batch_y = batch_x.to(device), batch_y.to(device)

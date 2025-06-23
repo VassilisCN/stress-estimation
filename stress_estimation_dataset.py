@@ -9,7 +9,7 @@ import os
 class STRESS_dataset(Dataset):
     """Dataset of emotion and shape coeficients of face images."""
 
-    def __init__(self, root='/home/nikodim/big_data/Stress/outputs', subjects=range(1,60), tasks=range(1, 12), sequence_pairs=[], min_frame=1, max_frame=3602, preload=True, multiclass=False, transform=None):
+    def __init__(self, root='/home/nikodim/big_data/Stress/outputs', subjects=range(1,60), tasks=range(1, 12), sequence_pairs=None, min_frame=1, max_frame=3602, preload=True, multiclass=False, transform=None):
         """
         Args:
             
@@ -19,7 +19,7 @@ class STRESS_dataset(Dataset):
         self.transform = transform
         self.subjects = subjects
         self.tasks = tasks
-        self.index_map = sequence_pairs
+        self.index_map = sequence_pairs if sequence_pairs else []
         self.data = []
         self.multiclass = multiclass
 

@@ -14,7 +14,7 @@ non_stress_tasks = [1, 2, 4, 6, 9]  # Non-stress tasks.
 last_validations = []
 min_validations = {}
 last_validations_acc = []
-max_validations_acc = {} 
+max_validations_acc = {}
 for i, valid_subject in enumerate(subjects):  # Use 1 subject for validation.
     train_subjects = [s for s in subjects if s != valid_subject] 
     valid_subjects = [valid_subject]
